@@ -1,0 +1,28 @@
+<dialog class="mdl-dialog">
+  <h4 class="mdl-dialog__title">{{lang 'LOGIN'}}</h4>
+  <div class="mdl-dialog__content">
+    <form action="#">
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <input class="mdl-textfield__input" type="text" id="hostname" pattern="[A-Z,a-z,0-9,\.]*">
+        <label class="mdl-textfield__label" for="hostname">{{lang 'LOGIN_HOSTNAME'}}</label>
+        <span class="mdl-textfield__error">{{lang 'LOGIN_INVALID_HOSTNAME'}}</span>
+      </div>
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <input class="mdl-textfield__input" type="text" id="port" pattern="^([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$">
+        <label class="mdl-textfield__label" for="port">{{lang 'LOGIN_PORT'}}</label>
+        <span class="mdl-textfield__error">{{lang 'LOGIN_INVALID_PORT'}}</label>
+      </div>
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <input class="mdl-textfield__input" type="password" id="password">
+        <label class="mdl-textfield__label" for="password">{{lang 'LOGIN_PASSWORD'}}</label>
+      </div>
+      <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="ssl">
+        <input type="checkbox" id="ssl" class="mdl-checkbox__input" checked>
+        <span class="mdl-checkbox__label">{{lang 'LOGIN_SSL'}}</span>
+      </label>
+    </form>
+  </div>
+  <div class="mdl-dialog__actions">
+    <button id="ok" type="button" class="mdl-button">{{lang 'OK'}}</button>
+  </div>
+</dialog>
