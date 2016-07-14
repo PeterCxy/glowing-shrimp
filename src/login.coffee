@@ -61,11 +61,12 @@ module.exports = class Login extends Component
     # Set the parameters and login
     @element.querySelector('#loading').style.visibility = 'visible'
     weechat.setParams details.hostname, details.port, details.password, details.ssl
-    weechat.on 'connect', =>
+    weechat.once 'connect', =>
       @element.querySelector('#snackbar-login-successful').MaterialSnackbar.showSnackbar
         message: getString 'LOGIN_SUCCESSFUL'
       @element.querySelector('dialog').close()
-    weechat.once 'error', =>
+    weechat.once 'error', (err) =>
+      console.error err
       @element.querySelector('#snackbar-login-successful').MaterialSnackbar.showSnackbar
         message: getString 'LOGIN_ERROR'
       @element.querySelector('#loading').style.visibility = 'hidden'

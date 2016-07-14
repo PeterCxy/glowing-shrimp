@@ -1257,7 +1257,7 @@ var Zlib = require('zlib');
             if (header.compression) {
                 var raw = new Uint8Array(data, 5);  // skip first five bytes (header, 4B size, 1B compression flag)
                 //var inflate = new Zlib.Inflate(raw);
-                var plain = inflate.inflateSync(raw);
+                var plain = Zlib.inflateSync(new Buffer(raw));
                 this._setData(plain.buffer);
                 this._dataAt = 0;  // reset position in data, as the header is not part of the decompressed data
             }

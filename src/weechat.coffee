@@ -1,6 +1,6 @@
 EventEmitter = require 'events'
 client = require './weechat/connection.coffee'
-Protocol = require './weechat/protocol.js'
+{Protocol} = require './weechat/protocol.js'
 
 class WeeChat extends EventEmitter
   constructor: ->
@@ -18,6 +18,7 @@ class WeeChat extends EventEmitter
     @conn = client.connect @hostname, @port, @password, @ssl, =>
       @retry = true
       @emit 'connect'
+      @updateBuffers()
     @setupConnection()
 
   reconnect: ->
@@ -31,5 +32,13 @@ class WeeChat extends EventEmitter
     @conn.on 'close', =>
       @emit 'close'
       @reconnect()
+
+  updateBuffers: ->
+    @conn.send Protocol.formatHdata
+      path: 'buffer:gui_buffers(*)'
+      keys: ['number', 'name', 'title']
+    .then (msg) =>
+      @emit 'bufferListUpdate', msg.objects[0].content
+    .catch (err) => @emit 'error', err
 
 module.exports = new WeeChat

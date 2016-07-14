@@ -10,15 +10,6 @@ class App
         @drawer = new Drawer document.querySelector '#drawer'
         @drawer.initialize()
       .then =>
-        # TODO: remove the test code
-        @drawer.update [
-            full_name: "default"
-          ,
-            full_name: '##Orz'
-          ,
-            full_name: '#archlinux-cn'
-        ]
-      .then =>
         @login.update()
         @login.show()
 

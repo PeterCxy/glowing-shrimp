@@ -1,6 +1,9 @@
 <span class="mdl-layout-title">{{lang 'BUFFERS'}}</span>
 <nav class="mdl-navigation">
   {{#each buffers}}
-  <a class="mdl-navigation__link" href="" data-id="{{@index}}">{{full_name}}</a>
+  <a class="mdl-navigation__link" href="#" data-id="{{number}}">{{full_name}}</a>
+  {{#each childs}}
+  <a class="mdl-navigation__link" href="#" data-id="{{number}}">&nbsp;&nbsp;{{name}}</a>
+  {{/each}}
   {{/each}}
 </nav>
