@@ -64,7 +64,10 @@ module.exports = class Login extends Component
     weechat.once 'connect', =>
       @element.querySelector('#snackbar-login-successful').MaterialSnackbar.showSnackbar
         message: getString 'LOGIN_SUCCESSFUL'
-      @element.querySelector('dialog').close()
+      try
+        @element.querySelector('dialog').close()
+      catch err
+        console.error err
     weechat.once 'error', (err) =>
       console.error err
       @element.querySelector('#snackbar-login-successful').MaterialSnackbar.showSnackbar
