@@ -10,3 +10,4 @@ module.exports =
   LOGIN_SSL: "SSL Encryption"
   LOGIN_SUCCESSFUL: 'Successfully logged in'
   LOGIN_ERROR: 'Failed to log in. Check your parameters please.'
+  PANEL_INPUT_HINT: 'Something to share ...'

@@ -1,0 +1,40 @@
+<div id="lines" class="mdl-grid">
+  <div class="mdl-cell mdl-cell--stretch mdl-cell--2-col mdl-cell--1-col-tablet mdl-cell--hide-phone">
+  </div>
+  <div id="conversation" class="mdl-cell mdl-cell--stretch mdl-cell--8-col mdl-cell--6-col-tablet mdl-cell--4-col-phone">
+    <ul class="conversation-list-item mdl-list">
+    {{#each lines}}
+      <li class="mdl-list__item mdl-list__item--three-line">
+        <span class="message-avatar mdl-list__item-avatar" style="background-color: {{colorFor tags_array.[0]}};">
+          <div class="message-avatar-text"><span>{{firstChar tags_array.[0]}}</span></div>
+        </span>
+        <span class="mdl-list__item-primary-content">
+          <!--<i class="material-icons mdl-list__item-avatar">person</i>-->
+          <span>{{tags_array.[0]}}</span>
+          <span class="mdl-list__item-text-body">{{message}}</span>
+        </span>
+        <span class="mdl-list__item-secondary-content">
+          <span class="mdl-list__item-secondary-info">{{dateFormat date 'hh:mm:ss'}}</span>
+        </span>
+      </li>
+    {{/each}}
+    </ul>
+  </div>
+</div>
+<div id="input-bar" class="mdl-shadow--2dp">
+  <div id="input-box-wrapper">
+    <form action="#">
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <input id="input-box" class="mdl-textfield__input" type="text" id="sample3">
+        <label class="mdl-textfield__label" for="input-box">{{lang 'PANEL_INPUT_HINT'}}</label>
+      </div>
+    </form>
+  </div>
+
+  <button id="action-send" class="mdl-button mdl-js-button mdl-button--icon">
+    <i class="material-icons">send</i>
+  </button>
+  <button id="action-add" class="mdl-button mdl-js-button mdl-button--icon">
+    <i class="material-icons">add</i>
+  </button>
+</div>

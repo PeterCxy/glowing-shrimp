@@ -1,5 +1,6 @@
 Login = require './login.coffee'
 Drawer = require './drawer.coffee'
+Panel = require './panel.coffee'
 
 class App
   constructor: ->
@@ -12,5 +13,8 @@ class App
       .then =>
         @login.update()
         @login.show()
+      .then =>
+        @panel = new Panel document.querySelector '.page-content'
+        @panel.initialize()
 
-new App
+window.App = new App

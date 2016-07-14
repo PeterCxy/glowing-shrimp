@@ -19,10 +19,12 @@ class WeeChat extends EventEmitter
       @retry = true
       @emit 'connect'
       @updateBuffers()
+        .then => @conn.send Protocol.formatSync()
     @setupConnection()
 
   reconnect: ->
     if @retry
+      console.log 'reconnecting'
       @connect()
 
   setupConnection: ->
@@ -37,8 +39,14 @@ class WeeChat extends EventEmitter
     @conn.send Protocol.formatHdata
       path: 'buffer:gui_buffers(*)'
       keys: ['number', 'name', 'title']
+    .catch (err) => @emit 'error', err
     .then (msg) =>
       @emit 'bufferListUpdate', msg.objects[0].content
-    .catch (err) => @emit 'error', err
+
+  fetchBufferLines: (id, num) ->
+    @conn.send Protocol.formatHdata
+      path: "buffer:0x#{id}/own_lines/last_line(-#{num})/data"
+      keys: []
+    .then (msg) => msg.objects[0].content
 
 module.exports = new WeeChat

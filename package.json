@@ -28,6 +28,7 @@
     "bluebird": "^3.4.1",
     "dialog-polyfill": "^0.4.3",
     "handlebars": "^4.0.5",
+    "moment": "^2.14.1",
     "weechat": "0.0.17"
   },
   "devDependencies": {

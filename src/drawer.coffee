@@ -7,6 +7,7 @@ module.exports = class Drawer extends Component
     @buffers = []
     @rawBuffers = []
     @bufferMap = {}
+    @firstTime = false
 
   initialize: ->
     super
@@ -28,7 +29,12 @@ module.exports = class Drawer extends Component
       list.forEach @addBuffer
       @update()
 
+      if not @firstTime
+        App.panel.switchTo @buffers[0].id, @buffers[0].title
+        @firstTime = true
+
   addBuffer: (buf) =>
+    buf.id = buf.pointers[0]
     buf.full_name = buf.name
     components = buf.full_name.split '.'
     if components[0] is 'server'
