@@ -1,5 +1,6 @@
 EventEmitter = require 'events'
 client = require './weechat/connection.coffee'
+Protocol = require './weechat/protocol.js'
 
 class WeeChat extends EventEmitter
   constructor: ->
@@ -27,8 +28,8 @@ class WeeChat extends EventEmitter
     @conn.on 'error', (err) =>
       @emit 'error', err
       @reconnect()
-    #@conn.on 'end', =>
-      #@emit 'end'
-      #@reconnect()
+    @conn.on 'close', =>
+      @emit 'close'
+      @reconnect()
 
 module.exports = new WeeChat
