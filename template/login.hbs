@@ -3,7 +3,7 @@
   <div class="mdl-dialog__content">
     <form action="#">
       <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-        <input class="mdl-textfield__input" type="text" id="hostname" pattern="[A-Z,a-z,0-9,\.]*">
+        <input class="mdl-textfield__input" type="text" id="hostname" pattern="[A-Z,a-z,0-9,:,\.]*">
         <label class="mdl-textfield__label" for="hostname">{{lang 'LOGIN_HOSTNAME'}}</label>
         <span class="mdl-textfield__error">{{lang 'LOGIN_INVALID_HOSTNAME'}}</span>
       </div>
@@ -24,5 +24,14 @@
   </div>
   <div class="mdl-dialog__actions">
     <button id="ok" type="button" class="mdl-button">{{lang 'OK'}}</button>
+    <button id="loading" type="button" class="mdl-button" style="visibility: hidden;"><div class="mdl-spinner mdl-js-spinner is-active"></div></button>
   </div>
 </dialog>
+<div id="snackbar-login-successful" class="mdl-js-snackbar mdl-snackbar">
+  <div class="mdl-snackbar__text">{{lang 'LOGIN_SUCCESSFUL'}}</div>
+  <button class="mdl-snackbar__action" type="button"></button>
+</div>
+<div id="snackbar-login-error" class="mdl-js-snackbar mdl-snackbar">
+  <div class="mdl-snackbar__text">{{lang 'LOGIN_ERROR'}}</div>
+  <button class="mdl-snackbar__action" type="button"></button>
+</div>

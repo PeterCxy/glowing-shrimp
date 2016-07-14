@@ -8,3 +8,5 @@ module.exports =
   LOGIN_INVALID_PORT: "Invalid Port"
   LOGIN_PASSWORD: "[Optional] Password"
   LOGIN_SSL: "SSL Encryption"
+  LOGIN_SUCCESSFUL: 'Successfully logged in'
+  LOGIN_ERROR: 'Failed to log in. Check your parameters please.'

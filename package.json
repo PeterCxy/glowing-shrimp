@@ -3,18 +3,23 @@
   "version": "1.0.0",
   "description": "Yet another WeeChat Relay client",
   "main": "index.coffee",
+  "browserify": {
+    "transform": [
+      "coffeeify"
+    ]
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "node_modules/.bin/browserify -t coffeeify index.coffee > bundle.js",
-    "start": "node_modules/.bin/browserify -t coffeeify index.coffee > bundle.js && node_modules/.bin/http-server",
-    "prepublish": "node_modules/.bin/browserify -t coffeeify index.coffee > bundle.js"
+    "build": "node_modules/.bin/browserify . -o bundle.js",
+    "start": "node_modules/.bin/browserify . -o bundle.js && node_modules/.bin/http-server",
+    "prepublish": "node_modules/.bin/browserify . -o bundle.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/PeterCxy/glowing-shrimp.git"
   },
   "author": "PeterCxy",
-  "license": "WTFPL",
+  "license": "GPL-3.0",
   "bugs": {
     "url": "https://github.com/PeterCxy/glowing-shrimp/issues"
   },

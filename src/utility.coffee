@@ -24,8 +24,12 @@ lang = require './lang/en_US.coffee' # TODO: Allow switching languages
 Handlebars = require 'handlebars'
 
 Handlebars.registerHelper 'lang', (name) ->
+  getString name
+
+getString = (name) ->
   return lang[name]
 
 module.exports =
   http: http
   readStream: readStream
+  getString: getString

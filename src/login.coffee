@@ -1,5 +1,7 @@
 Component = require './component.coffee'
+weechat = require './weechat.coffee'
 dialogPolyfill = require 'dialog-polyfill'
+{getString} = require './utility.coffee'
 
 module.exports = class Login extends Component
   constructor: (@element, @templateUrl = '/template/login.hbs') ->
@@ -45,17 +47,28 @@ module.exports = class Login extends Component
   login: ->
     details = 
       hostname: @element.querySelector('#hostname').value.trim()
-      port: @element.querySelector('#port').value.trim()
+      port: parseInt @element.querySelector('#port').value.trim()
       password: @element.querySelector('#password').value
       ssl: @element.querySelector('#ssl').checked
 
     if details.hostname is ''
       @element.querySelector('#hostname').focus()
       return
-    if details.port is '' or isNaN(parseInt details.port)
+    if details.port is '' or isNaN details.port
       @element.querySelector('#port').focus()
       return
 
-    # TODO: Actually login
+    # Set the parameters and login
+    @element.querySelector('#loading').style.visibility = 'visible'
+    weechat.setParams details.hostname, details.port, details.password, details.ssl
+    weechat.on 'connect', =>
+      @element.querySelector('#snackbar-login-successful').MaterialSnackbar.showSnackbar
+        message: getString 'LOGIN_SUCCESSFUL'
+      @element.querySelector('dialog').close()
+    weechat.once 'error', =>
+      @element.querySelector('#snackbar-login-successful').MaterialSnackbar.showSnackbar
+        message: getString 'LOGIN_ERROR'
+      @element.querySelector('#loading').style.visibility = 'hidden'
+    weechat.connect()
 
     @save(details)
