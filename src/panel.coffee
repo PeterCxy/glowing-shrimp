@@ -10,6 +10,7 @@ module.exports = class Panel extends Component
     @noMore = false
 
   update: (scrollToBottom = true) ->
+    console.log @bufferLines[@currentBuffer]
     context =
       lines: @bufferLines[@currentBuffer]
     @element.innerHTML = @template context

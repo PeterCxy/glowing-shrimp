@@ -36,13 +36,44 @@ Handlebars.registerHelper 'firstChar', (str) ->
 getString = (name) ->
   return lang[name]
 
-# Avatar colors
-avatarColors = [
-  '#f44336', '#e91e63', '#e91e63',
-  '#3f51b5', '#009688', '#795548',
-  '#607d8b'
-]
+# Colors
+materialColors =
+  'default': '#757575'
+  'black': '#000000'
+  'darkgray': '#212121'
+  'red': '#d32f2f'
+  'lightred': '#f44336'
+  'green': '#388e3c'
+  'lightgreen': '#4caf50'
+  'brown': '#795548'
+  'yellow': '#ff6f00'
+  'blue': '#2196f3'
+  'lightblue': '#03a9f4'
+  'magenta': '#e91e63'
+  'lightmagenta': '#ec407a'
+  'cyan': '#0097a7'
+  'lightcyan': '#00acc1'
+  'gray': '#757575'
+  'white': '#FFFFFF'
 
+# Get color of nickname from a list of tags
+Handlebars.registerHelper 'nickColor', (tags) ->
+  return materialColors['default'] if not tags? or tags.length is 0
+  for tag in tags
+    if tag.startsWith 'prefix_nick_'
+      color = tag.replace 'prefix_nick_', ''
+      return materialColors[color] if materialColors[color]?
+  return materialColors['default']
+
+# Get nickname from a list of tags
+Handlebars.registerHelper 'getNick', (tags) ->
+  return '???' if not tags? or tags.length is 0
+  for tag in tags
+    if tag.startsWith 'nick_'
+      return tag.replace 'nick_', ''
+  return tags[0]
+
+# Hash code extension
 hashCodeCache = {}
 String::hashCode = ->
   hash = 0
@@ -53,9 +84,6 @@ String::hashCode = ->
     hash = hash & hash
   hashCodeCache[@] = hash
   return hash
-
-Handlebars.registerHelper 'colorFor', (str) ->
-  avatarColors[Math.abs(str.hashCode()) % avatarColors.length]
 
 module.exports =
   http: http

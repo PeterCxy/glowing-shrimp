@@ -21,6 +21,14 @@ module.exports = class Drawer extends Component
       buffers: @buffers
     @element.innerHTML = @template context
 
+    # Set up the onclick listeners
+    links = @element.querySelectorAll '.mdl-navigation__link'
+    if links?
+      for link in links
+        do (link) =>
+          link.onclick = =>
+            App.panel.switchTo link.getAttribute('data-id'), link.getAttribute('data-title')
+
   setup: ->
     weechat.on 'bufferListUpdate', (list) =>
       @buffers = []

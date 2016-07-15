@@ -19,9 +19,10 @@
   width: 100%;
 }
 
-.message-avatar {
-  margin-right: 10px;
-  text-align: center;
+.message-avatar-wrapper {
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
 }
 
 .message-avatar-text {
@@ -29,10 +30,38 @@
   width: 100%;
   height: 100%;
   font-size: 30px;
+  color: white;
   text-align: center;
   justify-content: center;
   align-items: center;
   padding: 0 0 0 0;
+}
+
+@media (max-width: 839px) and (min-width: 480px) {
+  .message-avatar-wrapper {
+    width: 36px;
+    height: 36px;
+    border-radius: 18px;
+  }
+}
+
+.mdl-list__item-text-body {
+  margin-right: 10px;
+}
+
+.mdl-list__item--three-line-stretch {
+  height: auto;
+  min-height: 88px;
+}
+
+.mdl-list__item--three-line-stretch .mdl-list__item-primary-content {
+  height: auto;
+  min-height: 52px;
+}
+
+.mdl-list__item--three-line-stretch .mdl-list__item-primary-content .mdl-list__item-text-body {
+  height: auto;
+  min-height: 52px;
 }
 
 #input-bar {
