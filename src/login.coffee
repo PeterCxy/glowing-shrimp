@@ -6,6 +6,7 @@ dialogPolyfill = require 'dialog-polyfill'
 module.exports = class Login extends Component
   constructor: (@element, @templateUrl = '/template/login.hbs') ->
     super
+    @loading = false
 
   update: ->
     context = {}
@@ -45,6 +46,8 @@ module.exports = class Login extends Component
     dialog.showModal()
 
   login: ->
+    return if @loading
+    @loading = true
     details = 
       hostname: @element.querySelector('#hostname').value.trim()
       port: parseInt @element.querySelector('#port').value.trim()
@@ -68,11 +71,14 @@ module.exports = class Login extends Component
         @element.querySelector('dialog').close()
       catch err
         console.error err
+
+      @loading = false
     weechat.once 'error', (err) =>
       console.error err
       @element.querySelector('#snackbar-login-successful').MaterialSnackbar.showSnackbar
         message: getString 'LOGIN_ERROR'
       @element.querySelector('#loading').style.visibility = 'hidden'
+      @loading = false
     weechat.connect()
 
     @save(details)
