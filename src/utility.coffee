@@ -1,5 +1,6 @@
 Promise = require 'bluebird'
 moment = require 'moment'
+{Protocol} = require './weechat/protocol.js'
 
 # Promisify http methods
 http = require 'http'
@@ -72,6 +73,14 @@ Handlebars.registerHelper 'getNick', (tags) ->
     if tag.startsWith 'nick_'
       return tag.replace 'nick_', ''
   return tags[0]
+
+# Convert raw text to rich text
+Handlebars.registerHelper 'raw2rich', (raw) ->
+  res = ''
+  attrs = Protocol.rawText2Rich raw
+  attrs.forEach (it) ->
+    res += "<span style=\"#{"color: #{materialColors[it.fgColor.name]};" if it.fgColor?}\">#{it.text}</span>"
+  return new Handlebars.SafeString res
 
 # Hash code extension
 hashCodeCache = {}
