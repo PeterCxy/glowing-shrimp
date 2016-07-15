@@ -54,7 +54,7 @@ materialColors =
   'cyan': '#0097a7'
   'lightcyan': '#00acc1'
   'gray': '#757575'
-  'white': '#FFFFFF'
+  'white': '#d32f2f' # Do not use white in a light theme
 
 # Get color of nickname from a list of tags
 Handlebars.registerHelper 'nickColor', (tags) ->
