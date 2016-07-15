@@ -41,5 +41,5 @@ module.exports = class Panel extends Component
         @bufferLines[@currentBuffer] = list
 
         if list.length - originalLength < LINES_PER_PAGE
-          noMore = true
+          @noMore = true
       .then => @update()
