@@ -3,7 +3,7 @@ Component = require './component.coffee'
 
 LINES_PER_PAGE = 30
 module.exports = class Panel extends Component
-  constructor: (@element, @templateUrl = '/template/panel.hbs') ->
+  constructor: (@element, @templateUrl = 'template/panel.hbs') ->
     super
     @bufferLines = {}
     @currentBuffer = null

@@ -2,7 +2,7 @@ Component = require './component.coffee'
 weechat = require './weechat.coffee'
 
 module.exports = class Drawer extends Component
-  constructor: (@element, @templateUrl = '/template/drawer.hbs') ->
+  constructor: (@element, @templateUrl = 'template/drawer.hbs') ->
     super
     @buffers = []
     @rawBuffers = []

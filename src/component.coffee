@@ -1,5 +1,6 @@
 Handlebars = require 'handlebars'
-{http, readStream} = require './utility.coffee'
+{Promise} = require 'bluebird'
+{templates} = require './templates_loader.coffee'
 
 # Base class for all components
 module.exports = class Component
@@ -7,6 +8,6 @@ module.exports = class Component
     @template = null
 
   initialize: ->
-    http.getAsync @templateUrl
-      .then readStream
-      .then (t) => @template = Handlebars.compile t
+    Promise.try =>
+      templates[@templateUrl]
+    .then (t) => @template = Handlebars.compile t

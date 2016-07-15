@@ -4,7 +4,7 @@ dialogPolyfill = require 'dialog-polyfill'
 {getString} = require './utility.coffee'
 
 module.exports = class Login extends Component
-  constructor: (@element, @templateUrl = '/template/login.hbs') ->
+  constructor: (@element, @templateUrl = 'template/login.hbs') ->
     super
     @loading = false
 

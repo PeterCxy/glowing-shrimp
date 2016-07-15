@@ -5,7 +5,8 @@
   "main": "index.coffee",
   "browserify": {
     "transform": [
-      "coffeeify"
+      "coffeeify",
+      "brfs"
     ]
   },
   "scripts": {
@@ -34,6 +35,7 @@
   "devDependencies": {
     "browserify": "^13.0.1",
     "coffeeify": "^2.0.1",
+    "brfs": "^1.4.3",
     "http-server": "^0.9.0"
   }
 }
