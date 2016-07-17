@@ -30,6 +30,10 @@ connect = (host, port, password, ssl, cb) ->
     console.log err
     self.emit 'error', err
 
+  conn.on 'message', (msg) ->
+    if msg.id? and msg.id.startsWith('_') and msg.objects?
+      self.emit msg.id, msg.objects
+
   conn.connect "#{if ssl then 'wss' else 'ws'}://#{host}:#{port}/weechat",
     binaryType: 'arraybuffer'
     onopen: onopen

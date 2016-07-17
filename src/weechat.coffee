@@ -34,6 +34,8 @@ class WeeChat extends EventEmitter
     @conn.on 'close', =>
       @emit 'close'
       @reconnect()
+    @conn.on '_buffer_line_added', (msg) =>
+      @emit 'bufferNewLine', msg
 
   updateBuffers: ->
     @conn.send Protocol.formatHdata

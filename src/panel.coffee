@@ -9,17 +9,43 @@ module.exports = class Panel extends Component
     @currentBuffer = null
     @noMore = false
 
-  update: (scrollToBottom = true) ->
-    console.log @bufferLines[@currentBuffer]
+  initialize: ->
+    super
+      .then => @setupListeners()
+
+  setupListeners: ->
+    weechat.on 'bufferNewLine', (msg) =>
+      return if not (msg? and msg.length > 0)
+
+      msg[0].content.forEach (it) =>
+        if not @bufferLines[it.buffer]?
+          @bufferLines[it.buffer] = []
+        @bufferLines[it.buffer].push it
+        if @currentBuffer is it.buffer
+          @update true, true # TODO: Just add the element to the bottom
+
+  update: (scrollToBottom = true, scrollIfBottom = false) ->
+    cur = 0
+    container = @element.querySelector '#lines'
+
+    if container isnt null
+      cur = container.scrollTop
+
     context =
       lines: @bufferLines[@currentBuffer]
     @element.innerHTML = @template context
     componentHandler.upgradeElements @element
 
+    container = @element.querySelector '#lines'
+    container.scrollTop = cur # TODO: Keep the scrollbar to the current element
     # Scroll to bottom
     if scrollToBottom
-      container = @element.querySelector '#lines'
-      container.scrollTo 0, container.scrollHeight
+      if not scrollIfBottom
+        container.scrollTo 0, container.scrollHeight
+      else
+        total = container.scrollHeight - container.clientHeight
+        if (cur / total) > 0.9
+          container.scrollTo 0, container.scrollHeight
 
   switchTo: (id, title) ->
     return if id is @currentBuffer
