@@ -39,6 +39,7 @@ module.exports = class Panel extends Component
         lines: @bufferLines[@currentBuffer]
       @element.innerHTML = @template context
       componentHandler.upgradeElements @element
+      @setupButtons()
     else
       # Just add the new line
       context = newLine
@@ -78,3 +79,14 @@ module.exports = class Panel extends Component
         if list.length - originalLength < LINES_PER_PAGE
           @noMore = true
       .then => @update()
+
+  setupButtons: ->
+    sendButton = @element.querySelector '#action-send'
+    textBox = @element.querySelector '#input-box'
+    sendButton.onclick = =>
+      return if not @currentBuffer?
+      weechat.sendMessage @currentBuffer, textBox.value
+      textBox.value = ''
+    textBox.onkeypress = (ev) =>
+      if ev.keyCode is 13
+        sendButton.click()

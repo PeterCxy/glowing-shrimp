@@ -51,4 +51,9 @@ class WeeChat extends EventEmitter
       keys: []
     .then (msg) => msg.objects[0].content
 
+  sendMessage: (bufferId, msg) ->
+    @conn.send Protocol.formatInput
+      buffer: "0x#{bufferId}"
+      data: msg
+
 module.exports = new WeeChat
