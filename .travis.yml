@@ -10,7 +10,8 @@ script:
 
 after_success:
   - git clone https://github.com/PeterCxy/glowing-shrimp.git -b gh-pages
-  - /bin/cp -Rrf ./dist/ ./glowing-shrimp/
+  - /bin/cp -Rrf ./dist/* ./glowing-shrimp/
+  - ls -l ./dist/
   - cd ./glowing-shrimp
   - git config --global user.name "PeterCxy"
   - git config --global user.email "peter@typeblog.net"
