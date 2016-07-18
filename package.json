@@ -11,7 +11,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "node_modules/.bin/browserify . -o bundle.js",
+    "build": "/bin/bash build.sh",
     "start": "node_modules/.bin/browserify . -o bundle.js && node_modules/.bin/http-server",
     "prepublish": "node_modules/.bin/browserify . -o bundle.js"
   },
