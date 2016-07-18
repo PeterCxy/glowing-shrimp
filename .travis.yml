@@ -1,0 +1,19 @@
+env:
+  secure: "Rl9/5oJYOsFsyn0Fx3G+uxdlE95UChDTTHvnOt6YcqmZ1JbTd4Ykh9oGCL/ARfkblkLX74H/gkNVz7/8/HMRIivfsOqZzYP1zNMH39Q5Rew0y7Z7N+6aYTkbZcs3Ylikw7sJ0xxHD1ZI7+SUjl4cFLETHKX95i0zwMXwOLeISV1n5JVKrxMY102qh1aqgLqNGvf2tk+BRC0RTjOf8ooLbSAed7+Lng9GQ0k2d/VjwqNCuO8hXBFAkkqqPJ47T2DA8yBF8KS+iIL8o+/ca0C+sIKhUQSOKso2yO1Cw7lhQIRtoQI0uRUPPXeu7MN3eV8a96iEwFNnZx26JTgMqojNYH0lwZgOudF0HgBNP51DW8ScZAbf47cDKubW4iAi7cc8t6e1TC4aPevyBzzWmWdEjhWnF6NlpSSqZICbzmCivlnvzN3AJtFy3VF0V/Bc0nTXNdxoVsWIkj+8Zcl2lWymA+7hQmsxdUCNON4ZxisSBZnbbyr3fCKtklO4IXyMuuoGGTGvsCQjUjoyiSjkvgEGgcxolhb3xpJuDvQkLousTQwa4eS+EQaCuJzexzU7M0G6qhJanWxJbsAJdkdxRYYxioVGGiKtb2DBPQWbNwn1Hl9+QiDKt0KcfA1QAhTIxYt/Dvvxm8EQW2BCwtFg87mbU19jD6HDb94o6B7TfIloHs0="
+language: node_js
+node_js:
+  - "6"
+
+script:
+  - npm install --developement
+  - npm run build
+
+after_success:
+  - rm -rf node_modules
+  - git checkout gh-pages
+  - cp -Rrf ./dist/ ./
+  - git config --global user.name "PeterCxy"
+  - git config --global user.email "peter@typeblog.net"
+  - git add -A
+  - git commit -a -m "Travis CI Automatic Synchronization"
+  - git push https://peter:$TOKEN@github.com/PeterCxy/glowing-shrimp.git gh-pages
