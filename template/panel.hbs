@@ -2,7 +2,7 @@
   <div class="mdl-cell mdl-cell--stretch mdl-cell--2-col mdl-cell--1-col-tablet mdl-cell--hide-phone">
   </div>
   <div id="conversation" class="mdl-cell mdl-cell--stretch mdl-cell--8-col mdl-cell--6-col-tablet mdl-cell--4-col-phone">
-    <ul class="conversation-list-item mdl-list">
+    <ul id="lines-container" class="conversation-list-item mdl-list">
     {{#each lines}}
     {{> 'template/msg.hbs'}}
     {{/each}}

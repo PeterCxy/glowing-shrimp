@@ -1,5 +1,7 @@
 weechat = require './weechat.coffee'
+Handlebars = require 'handlebars'
 Component = require './component.coffee'
+{templates} = require './templates_loader.coffee'
 
 LINES_PER_PAGE = 30
 module.exports = class Panel extends Component
@@ -11,6 +13,7 @@ module.exports = class Panel extends Component
 
   initialize: ->
     super
+      .then => @partial = Handlebars.compile templates['template/msg.hbs']
       .then => @setupListeners()
 
   setupListeners: ->
@@ -20,21 +23,27 @@ module.exports = class Panel extends Component
       msg[0].content.forEach (it) =>
         if not @bufferLines[it.buffer]?
           @bufferLines[it.buffer] = []
-        @bufferLines[it.buffer].push it
+        @bufferLines[it.buffer].push it # TODO: Notifications and unread counts
         if @currentBuffer is it.buffer
-          @update true, true # TODO: Just add the element to the bottom
+          @update true, true, it
 
-  update: (scrollToBottom = true, scrollIfBottom = false) ->
+  update: (scrollToBottom = true, scrollIfBottom = false, newLine = null) ->
     cur = 0
     container = @element.querySelector '#lines'
 
     if container isnt null
       cur = container.scrollTop
 
-    context =
-      lines: @bufferLines[@currentBuffer]
-    @element.innerHTML = @template context
-    componentHandler.upgradeElements @element
+    if not newLine?
+      context =
+        lines: @bufferLines[@currentBuffer]
+      @element.innerHTML = @template context
+      componentHandler.upgradeElements @element
+    else
+      # Just add the new line
+      context = newLine
+      @element.querySelector('#lines-container').innerHTML += @partial context
+      componentHandler.upgradeElements @element
 
     container = @element.querySelector '#lines'
     container.scrollTop = cur # TODO: Keep the scrollbar to the current element
