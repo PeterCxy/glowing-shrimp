@@ -17,3 +17,6 @@ cp bundle.js ./dist/
 
 # Copy the main HTML
 cp index.html ./dist/
+
+# Add timestamps
+sed -i -e "s/ver=dev/ver=$(date +'%s')/g" ./dist/index.html
