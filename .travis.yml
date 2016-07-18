@@ -9,11 +9,11 @@ script:
   - npm run build
 
 after_success:
-  - rm -rf node_modules
-  - git checkout gh-pages
-  - cp -Rrf ./dist/ ./
+  - git clone https://github.com/PeterCxy/glowing-shrimp.git -b gh-pages
+  - cp -Rrf ./dist/ ./glowing-shrimp/
+  - cd ./glowing-shrimp
   - git config --global user.name "PeterCxy"
   - git config --global user.email "peter@typeblog.net"
   - git add -A
   - git commit -a -m "Travis CI Automatic Synchronization"
-  - git push https://peter:$TOKEN@github.com/PeterCxy/glowing-shrimp.git gh-pages
+  - git push https://PeterCxy:$TOKEN@github.com/PeterCxy/glowing-shrimp.git gh-pages
