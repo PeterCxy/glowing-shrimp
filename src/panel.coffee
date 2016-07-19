@@ -51,11 +51,11 @@ module.exports = class Panel extends Component
     # Scroll to bottom
     if scrollToBottom
       if not scrollIfBottom
-        container.scrollTo 0, container.scrollHeight
+        container.scrollTop = container.scrollHeight
       else
         total = container.scrollHeight - container.clientHeight
         if (cur / total) > 0.9 or container.scrollHeight <= (container.clientHeight * 1.2)
-          container.scrollTo 0, container.scrollHeight
+          container.scrollTop = container.scrollHeight
 
   switchTo: (id, title) ->
     return if id is @currentBuffer
