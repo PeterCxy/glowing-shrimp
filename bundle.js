@@ -34100,7 +34100,7 @@ module.exports = Drawer = (function(superClass) {
   };
 
   Drawer.prototype.update = function(buffers) {
-    var context, i, len, link, links, results;
+    var context, links;
     if (buffers == null) {
       buffers = this.buffers;
     }
@@ -34111,18 +34111,13 @@ module.exports = Drawer = (function(superClass) {
     this.element.innerHTML = this.template(context);
     links = this.element.querySelectorAll('.mdl-navigation__link');
     if (links != null) {
-      results = [];
-      for (i = 0, len = links.length; i < len; i++) {
-        link = links[i];
-        results.push((function(_this) {
-          return function(link) {
-            return link.onclick = function() {
-              return App.panel.switchTo(link.getAttribute('data-id'), link.getAttribute('data-title'));
-            };
+      return Array.prototype.forEach.call(links, (function(_this) {
+        return function(link) {
+          return link.onclick = function() {
+            return App.panel.switchTo(link.getAttribute('data-id'), link.getAttribute('data-title'));
           };
-        })(this)(link));
-      }
-      return results;
+        };
+      })(this));
     }
   };
 
