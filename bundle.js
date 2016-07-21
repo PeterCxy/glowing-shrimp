@@ -34070,7 +34070,8 @@ module.exports = Component = (function() {
 var Component, Drawer, weechat,
   bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
   extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-  hasProp = {}.hasOwnProperty;
+  hasProp = {}.hasOwnProperty,
+  indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
 Component = require('./component.coffee');
 
@@ -34086,8 +34087,8 @@ module.exports = Drawer = (function(superClass) {
     Drawer.__super__.constructor.apply(this, arguments);
     this.buffers = [];
     this.rawBuffers = [];
+    this.bufferIds = [];
     this.bufferMap = {};
-    this.firstTime = false;
   }
 
   Drawer.prototype.initialize = function() {
@@ -34124,14 +34125,15 @@ module.exports = Drawer = (function(superClass) {
   Drawer.prototype.setup = function() {
     return weechat.on('bufferListUpdate', (function(_this) {
       return function(list) {
+        var ref;
         _this.buffers = [];
         _this.rawBuffers = [];
+        _this.bufferIds = [];
         _this.bufferMap = {};
         list.forEach(_this.addBuffer);
         _this.update();
-        if (!_this.firstTime) {
-          App.panel.switchTo(_this.buffers[0].id, _this.buffers[0].title);
-          return _this.firstTime = true;
+        if (!(ref = App.panel.getCurrentBuffer(), indexOf.call(_this.bufferIds, ref) >= 0)) {
+          return App.panel.switchTo(_this.buffers[0].id, _this.buffers[0].title);
         }
       };
     })(this));
@@ -34153,10 +34155,11 @@ module.exports = Drawer = (function(superClass) {
       if (!parent.childs) {
         parent.childs = [];
       }
-      return parent.childs.push(buf);
+      parent.childs.push(buf);
     } else {
-      return this.buffers.push(buf);
+      this.buffers.push(buf);
     }
+    return this.bufferIds.push(buf.id);
   };
 
   return Drawer;
@@ -34334,6 +34337,10 @@ module.exports = Panel = (function(superClass) {
     this.currentBufferTitle = null;
     this.noMore = false;
   }
+
+  Panel.prototype.getCurrentBuffer = function() {
+    return this.currentBuffer;
+  };
 
   Panel.prototype.initialize = function() {
     return Panel.__super__.initialize.apply(this, arguments).then((function(_this) {
@@ -34712,9 +34719,29 @@ WeeChat = (function(superClass) {
         return _this.reconnect();
       };
     })(this));
-    return this.conn.on('_buffer_line_added', (function(_this) {
+    this.conn.on('_buffer_line_added', (function(_this) {
       return function(msg) {
         return _this.emit('bufferNewLine', msg);
+      };
+    })(this));
+    this.conn.on('_buffer_opened', (function(_this) {
+      return function() {
+        return _this.updateBuffers();
+      };
+    })(this));
+    this.conn.on('_buffer_moved', (function(_this) {
+      return function() {
+        return _this.updateBuffers();
+      };
+    })(this));
+    this.conn.on('_buffer_renamed', (function(_this) {
+      return function() {
+        return _this.updateBuffers();
+      };
+    })(this));
+    return this.conn.on('_buffer_closing', (function(_this) {
+      return function() {
+        return _this.updateBuffers();
       };
     })(this));
   };

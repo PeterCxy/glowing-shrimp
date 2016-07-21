@@ -34,9 +34,10 @@
 
 .message-avatar-text {
   display: inline-flex;
-  width: 100%;
+  width: calc(100% + 0.5px);
   height: 100%;
   font-size: 30px;
+  font-family: monospace;
   color: white;
   text-align: center;
   justify-content: center;
