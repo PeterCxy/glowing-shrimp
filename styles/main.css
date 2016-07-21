@@ -2,6 +2,13 @@
   overflow: hidden;
 }
 
+#toolbar-title {
+  width: 80%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: "...";
+}
+
 .page-content {
   overflow: hidden;
 }
