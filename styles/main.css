@@ -52,6 +52,14 @@
   }
 }
 
+@media (max-width: 1432px) and (min-width: 839px) {
+  .message-avatar-wrapper {
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+  }
+}
+
 .mdl-list__item-text-body {
   margin-right: 10px;
 }
