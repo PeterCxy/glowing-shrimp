@@ -37,6 +37,12 @@ class WeeChat extends EventEmitter
     @conn.on '_buffer_line_added', (msg) =>
       @emit 'bufferNewLine', msg
 
+    # Reload all buffers when there are changes in the list
+    @conn.on '_buffer_opened', => @updateBuffers()
+    @conn.on '_buffer_moved', => @updateBuffers()
+    @conn.on '_buffer_renamed', => @updateBuffers()
+    @conn.on '_buffer_closing', => @updateBuffers()
+
   updateBuffers: ->
     @conn.send Protocol.formatHdata
       path: 'buffer:gui_buffers(*)'

@@ -12,6 +12,8 @@ module.exports = class Panel extends Component
     @currentBufferTitle = null
     @noMore = false
 
+  getCurrentBuffer: -> @currentBuffer
+
   initialize: ->
     super
       .then => @partial = Handlebars.compile templates['template/msg.hbs']

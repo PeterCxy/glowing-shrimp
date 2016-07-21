@@ -6,8 +6,8 @@ module.exports = class Drawer extends Component
     super
     @buffers = []
     @rawBuffers = []
+    @bufferIds = []
     @bufferMap = {}
-    @firstTime = false
 
   initialize: ->
     super
@@ -32,13 +32,13 @@ module.exports = class Drawer extends Component
     weechat.on 'bufferListUpdate', (list) =>
       @buffers = []
       @rawBuffers = []
+      @bufferIds = []
       @bufferMap = {}
       list.forEach @addBuffer
       @update()
 
-      if not @firstTime
+      if not (App.panel.getCurrentBuffer() in @bufferIds)
         App.panel.switchTo @buffers[0].id, @buffers[0].title
-        @firstTime = true
 
   addBuffer: (buf) =>
     buf.id = buf.pointers[0]
@@ -58,3 +58,4 @@ module.exports = class Drawer extends Component
       parent.childs.push buf
     else
       @buffers.push buf
+    @bufferIds.push buf.id
