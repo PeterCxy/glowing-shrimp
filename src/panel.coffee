@@ -9,12 +9,15 @@ module.exports = class Panel extends Component
     super
     @bufferLines = {}
     @currentBuffer = null
+    @currentBufferTitle = null
     @noMore = false
 
   initialize: ->
     super
       .then => @partial = Handlebars.compile templates['template/msg.hbs']
-      .then => @setupListeners()
+      .then =>
+        @setupListeners()
+        @setupSnackbar()
 
   setupListeners: ->
     weechat.on 'bufferNewLine', (msg) =>
@@ -61,6 +64,7 @@ module.exports = class Panel extends Component
     return if id is @currentBuffer
     document.querySelector('#toolbar-title').innerHTML = title
     @currentBuffer = id
+    @currentBufferTitle = title
     @noMore = false
     if not @bufferLines[@currentBuffer]?
       @bufferLines[@currentBuffer] = []
@@ -90,3 +94,9 @@ module.exports = class Panel extends Component
     textBox.onkeypress = (ev) =>
       if ev.keyCode is 13
         sendButton.click()
+
+  setupSnackbar: ->
+    document.querySelector('#toolbar-title').onclick = =>
+      @element.querySelector('#snackbar-title').MaterialSnackbar.showSnackbar
+        message: @currentBufferTitle
+        timeout: 5000
